@@ -1,0 +1,29 @@
+.product{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--tg-theme-button-color);
+    padding: 15px;
+    width: 170px;
+}
+
+.img{
+    width: 100px;
+    background: lightgreen;
+    height: 100px;
+    margin: 0 auto;
+    background: var(--tg-theme-button-color);
+    opacity: 0.2;
+}
+
+.description{
+    font-size: 0.8em;
+}
+
+.add-btn{
+    width: 100px;
+}
+
+.title{
+    font-size: 14px;
+    color: green;
+}
