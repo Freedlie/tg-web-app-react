@@ -1,9 +1,13 @@
 .list{
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
+
 }
 
 .item{
+    width: 48%;
     margin-right: 10px;
     margin-bottom: 10px;
 }
