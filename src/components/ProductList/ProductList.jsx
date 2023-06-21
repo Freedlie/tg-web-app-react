@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import css from './PrudoctList.module.css';
 import ProductItem from "../../ProductItem/ProductItem";
@@ -77,7 +77,7 @@ const ProductList = () => {
 
     const [addedItems, setAddedItems] = useState([]);
 
-    const {tg} = useTelegram();
+    const {tg,queryId} = useTelegram();
 
     const onAdd = (product) => {
         const alreadyAdded = addedItems.find(item => item.id === product.id);
@@ -100,6 +100,30 @@ const ProductList = () => {
         }
     }
 
+    const onSendData = useCallback(()=>{
+        const data = {
+            products:addedItems,
+            totalPrice: getTotalPrice(addedItems),
+            queryId
+        }
+
+        fetch('http://localhost:8080/web-data',{
+            method:'POST',
+            headers:{
+                'Content-type':'application/json'
+            },
+            body:JSON.stringify(data)
+        })
+
+        tg.sendData(JSON.stringify(data));
+    },[addedItems])
+
+    useEffect(()=>{
+        tg.onEvent('mainButtonClicked', onSendData);
+        return () => {
+            tg.offEvent('mainButtonClicked', onSendData);
+        }
+    },[onSendData])
 
     return (
         <div className={css.list}>
